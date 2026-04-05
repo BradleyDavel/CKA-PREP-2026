@@ -11,6 +11,24 @@ kubectl wait --namespace ingress-nginx \
   --selector=app.kubernetes.io/component=controller \
   --timeout=120s || true
 
+echo "Patching ingress controller to use hostNetwork (port 80)..."
+kubectl -n ingress-nginx patch deployment ingress-nginx-controller \
+  --type='json' \
+  -p='[
+    {"op":"add","path":"/spec/template/spec/hostNetwork","value":true},
+    {"op":"add","path":"/spec/template/spec/dnsPolicy","value":"ClusterFirstWithHostNet"}
+  ]'
+
+echo "Waiting for patched controller rollout..."
+kubectl -n ingress-nginx rollout status deployment ingress-nginx-controller
+
+echo "Getting node IP for /etc/hosts mapping..."
+NODE_IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
+
+echo "Mapping example.org -> $NODE_IP"
+grep -q "example.org" /etc/hosts && sed -i '/example.org/d' /etc/hosts
+echo "$NODE_IP example.org" >> /etc/hosts
+
 echo "Creating namespace: echo-sound"
 kubectl create ns echo-sound || true
 
