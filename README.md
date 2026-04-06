@@ -44,3 +44,6 @@ alias q15='cd ~/CKA-PREP-2026 && bash scripts/run-question.sh "Question-15 Etcd-
 alias q16='cd ~/CKA-PREP-2026 && bash scripts/run-question.sh "Question-16 NodePort"'
 alias q17='cd ~/CKA-PREP-2026 && bash scripts/run-question.sh "Question-17 TLS-Config"'
 ```
+## Bonus Activity kube-system ports:
+Get to know your ports with this matching exercise!
+<https://puzzel.org/en/matching-pairs/play?p=-OpXPVHM2U8h1klt8Y-q>
