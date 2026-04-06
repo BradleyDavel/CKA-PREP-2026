@@ -14,7 +14,7 @@ sudo sed -i 's/port: 2381/port: 2379/g' /etc/kubernetes/manifests/etcd.yaml
 sudo sed -i 's/127.0.0.1:2379/127.0.0.11:2380/g' /etc/kubernetes/manifests/kube-apiserver.yaml
 
 # Step 4: Break kube-controller-manager probes (wrong host, wrong port type)
-sudo sed -i 's/127.0.0.1/192.168.1.99/g' /etc/kubernetes/manifests/kube-controller-manager.yaml
+sudo sed -i 's/host: 127.0.0.1/host: 192.168.1.99/g' /etc/kubernetes/manifests/kube-controller-manager.yaml
 sudo sed -i 's/10257/probe_port/g' /etc/kubernetes/manifests/kube-controller-manager.yaml
 sudo sed -i 's/10252/probe_port/g' /etc/kubernetes/manifests/kube-controller-manager.yaml
 
