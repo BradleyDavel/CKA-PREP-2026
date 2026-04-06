@@ -9,3 +9,4 @@
 # Ensure that `kubectl get nodes` works successfully and all core controlplane pods are running.
 
 # Video Link - https://youtu.be/IL448T6r8H4
+# Ports exercise - https://puzzel.org/en/matching-pairs/play?p=-OpXPVHM2U8h1klt8Y-q
