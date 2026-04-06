@@ -2,14 +2,13 @@
 
 # 1. Investigate etcd
 sudo crictl ps -a | grep etcd
-# The etcd container keeps restarting or exiting. Check the logs:
-sudo crictl logs <etcd-container-id>
-# Or check the kubelet logs for why probes are failing:
+# The etcd container might be crashlooping, or reporting 0/1 Ready.
+# If it's running but not Ready, check why probes are failing:
 sudo journalctl -u kubelet | grep etcd
-# The issue is the probes are attempting HTTP on an HTTPS port.
+# The issue is the probes are attempting plaintext HTTP on the secure 2379 port.
 # Fix etcd manifest:
 sudo vi /etc/kubernetes/manifests/etcd.yaml
-# Change `scheme: HTTP` back to `scheme: HTTPS` for the liveness, readiness, and startup probes.
+# Change `scheme: HTTP` to `scheme: HTTPS` for the liveness, readiness, and startup probes.
 
 # 2. Investigate kube-apiserver
 # Once etcd is up, check apiserver
